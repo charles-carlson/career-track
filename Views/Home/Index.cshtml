@@ -1,0 +1,150 @@
+﻿@model CareerTrack.Models.DateAppliedChart
+@using System.Text.Json
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Charts</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
+    <script>
+        var dateStrings = @Html.Raw(JsonSerializer.Serialize(ViewBag.Dates));
+        var dateCount = @Html.Raw(JsonSerializer.Serialize(ViewBag.DateCount));
+        var dates = dateStrings.map((dateString) => {
+            return new Date(dateString);
+        });
+        dates.sort((a, b) => {
+            return a - b;
+        })
+        var sortedDates = dates.map((date) => {
+            return date.toISOString().split('T')[0];
+        })
+        var barChartData = {
+            labels: sortedDates,
+            datasets: [{
+                label: "Dates Applied Count",
+                borderWidth: 2,
+                backgroundColor: 'lightseagreen',
+                data: dateCount
+            }]
+        }
+        var options = {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM YYYY'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Month By Year'
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration:2000
+            }
+        };
+        function checkInViewPort(el) {
+            var rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        function handleIntersection(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startChartAnimation();
+                    //observer.unobserve(entry.target);
+                }
+            });
+        }
+        function startChartAnimation() {
+            if (window.myBar) {
+                window.myBar.destroy();
+            }
+            var ctx1 = document.getElementById("barcanvas").getContext("2d");
+            window.myBar = new Chart(ctx1,
+                {
+                    type: 'bar',
+                    data: barChartData,
+                    options:options
+                });
+        };
+        document.addEventListener("DOMContentLoaded", () => {
+            var observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+            var chartCanvas = document.getElementById("barcanvas");
+            if(chartCanvas) {
+                observer.observe(chartCanvas);
+            } else {
+                console.error("Unable to find the chart canvas element with ID 'barcanvas'");
+            }
+        })
+
+    </script>
+</head>
+<body>
+    <div class="text-center">
+        <div class="main-page">
+            <div class="card-row-1">
+                <div class="card">
+                    <div class="card-container">
+                        <p class="card-text">@ViewData["totalApplied"]</p>
+                        <div class="card-text-2-container"><p class="card-text-2">Applications sent</p></div>
+
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <p class="card-text">@ViewData["totalReplies"]</p>
+                        <div class="card-text-2-container"><p class="card-text-2">Replies from companies</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-row-2">
+                <div class="card">
+                    <div class="card-container">
+                        <p class="card-text special">@ViewData["mostApplied"]</p>
+                        <p class="card-text-3">You have applied to @ViewData["totalmostApplied"] jobs of this role</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        @if (ViewData["mostAppliedLocation"] == null)
+                        {
+                            <p>You have not entered any locations into your career table</p>
+                        }
+                        else if (ViewData["mostAppliedLocation"].ToString() == "US")
+                        {
+                            <p class="card-text">@ViewData["mostAppliedLocation"]</p>
+                            <p class="card-text-3">You have applied to mostly remote jobs</p>
+                        }
+                        else
+                        {
+                            <p class="card-text special">@ViewData["mostAppliedLocation"]</p>
+                            <p class="card-text-3">You have applied the most to this location</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center">
+                <canvas id="barcanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

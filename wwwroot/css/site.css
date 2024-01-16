@@ -1,0 +1,206 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.pagination {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.pagination a {
+    border: 1px solid #ddd; /* Gray */
+    margin: 0 1px;
+    text-decoration:none;
+    color: darkgray;
+    background-color:white;
+    display:block;
+    width: 25px;
+    height:25px;
+    text-align:center;
+}
+.pagination a:hover{
+    background-color: lightgray;
+    color:white;
+}
+nav{
+    display: flex;
+    justify-content:center;
+}
+#layout-nav{
+    background-color:lightseagreen;
+}
+table{
+    border: 1px solid #ddd;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    border-collapse:collapse;
+    border-spacing: 50px 0;
+    table-layout:fixed;
+}
+tr {
+    border-bottom: 1px solid #ddd;
+}
+table thead th {
+    border-bottom: 1px solid #ddd;
+    border-spacing: inherit;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+table td {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+td{
+    padding:.5em;
+}
+tbody tr:hover{
+    background-color: lightseagreen;
+}
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+.edit-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 70%; /* Set a maximum width for the modal */
+    width: 90%; /* Make the width 100% initially */
+    box-sizing: border-box;
+}
+.edit-overlay-header {
+    text-align: right;
+}
+#icon {
+    border: 1px solid #ddd;
+    font-size: 2em;
+    display:inline-block;
+}
+.card {
+    display: block;
+    margin: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    width: 250px;
+    height: 300px;
+    box-sizing: border-box;
+}
+.card-row-1 {
+    vertical-align: top;
+    display:inline-flex;
+}
+.card-row-2 {
+    vertical-align: top;
+    display:inline-flex;
+}
+.main-page{
+    text-align:center;
+}
+.card-text {
+    text-align: center;
+    vertical-align: middle;
+    position:relative;
+
+}
+.card-container{
+    width:50%;
+    margin:auto;
+    position:relative;
+    width:inherit;
+    height:inherit;
+}
+.card-text {
+    text-align: center;
+    /* vertical-align: middle; */
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    line-height: calc(300px - 34px);
+    /* outline-width: inherit; */
+    width: inherit;
+    color:lightseagreen;
+    font-size:500%;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 125px; */
+    /* margin: 50px;*/
+}
+.special {
+    font-size: 250%;
+    line-height: initial;
+    word-spacing: inherit;
+    overflow-wrap: break-word;
+    padding-top: 80px;
+}
+.card-text-3 {
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    vertical-align: middle;
+    word-break: break-word;
+    margin-bottom: auto;
+    width: inherit;
+    background: lightseagreen;
+    color: white;
+}
+.card-text-2{
+    position:absolute;
+    bottom:0px;
+    padding: 5px;
+    vertical-align:middle;
+    word-break:break-word;
+    margin:10px;
+    width:calc(100% - 20px);
+    background:lightseagreen;
+    color:white;
+}
+.card-text-2-container {
+    width: inherit;
+    position: absolute;
+    height: 50px;
+    background: lightseagreen;
+    bottom: 0px;
+}
+.search-header{
+    width:inherit;
+    text-align:center;
+}
+#searchInput{
+    width:500px;
+    border-color:lightseagreen;
+}

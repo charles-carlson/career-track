@@ -1,0 +1,105 @@
+﻿@model Job
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .form-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+                width: 150px; /* Fixed width for labels */
+                margin-right: 10px; /* Optional: Add margin between label and input */
+                text-align: right;
+        }
+
+        label + input {
+            width: 30%;
+            margin: 0 30% 0 4%;
+        }
+
+        label + select {
+            width: 30%;
+            margin: 0 30% 0 4%;
+        }
+
+        .form-group input, .form-group select {
+            flex: 1; /* Allow input/select to take up the remaining space */
+        }
+    </style>
+</head>
+<body>
+    <h2>Add an applied Job</h2>
+    @using (Html.BeginForm("Add", "Job", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label asp-for="Name">Company Name:</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Position">Position:</label>
+            <input asp-for="Position" class="form-control" />
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Languages">Languages:</label>
+            <input asp-for="Languages" class="form-control" type="text" />
+            <span asp-validation-for="Languages" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateApplied">Date Applied:</label>
+            <input asp-for="DateApplied" class="form-control" type="date" />
+            <span asp-validation-for="DateApplied" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Location">Location:</label>
+            <input asp-for="Location" class="form-control" type="text" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="IsWFH">Work From Home:</label>
+            @Html.DropDownListFor(model => model.IsWFH, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+            <span asp-validation-for="DateApplied" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Salary">Salary:</label>
+            <input asp-for="Salary" class="form-control" type="text" />
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReplyBack">Reply Back:</label>
+            <input asp-for="ReplyBack" class="form-control" type="text" />
+            <span asp-validation-for="ReplyBack" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Interview">Interview</label>
+            @Html.DropDownListFor(model => model.Interview, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+            <span asp-validation-for="Interview" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Offer">Offer:</label>
+            @Html.DropDownListFor(model => model.Offer, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+            <span asp-validation-for="Offer" class="text-danger"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Add Job</button>
+        </div>
+
+    }
+    @functions{
+        private List<SelectListItem> GetDropdowns()
+        {
+            return new List<SelectListItem>
+        {
+            new SelectListItem {Value="Yes",Text="Yes"},
+            new SelectListItem {Value="No",Text="No"}
+        };
+        }
+    }
+</body>
+</html>
