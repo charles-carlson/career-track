@@ -130,7 +130,7 @@
                     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
                     {
                         <li class="@(i == Model.PageInfo.PageNumber ? "active" : "")">
-                            <a href="@Url.Action("Index",new { page = i, pageSize = Model.PageInfo.PageSize,filter = "" })">@i</a>
+                            <a href="@Url.Action("Index",new { page = i, pageSize = Model.PageInfo.PageSize,filter = Model.Filter })">@i</a>
                         </li>
                     }
                 </ul>

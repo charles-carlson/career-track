@@ -12,14 +12,15 @@ namespace CareerTrack.Services
 		int GetNumberofJobs();
 		IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter);
 		int GetNumberofPagedJobs(string filter);
-		void AddJob(Job newJob);
+		Task AddJob(Job newJob);
 		Job GetJobById(int id);
-		void UpdateJob(Job updateJob);
+		Task UpdateJob(Job updateJob);
 		int GetTotalReplies();
 		string GetMostAppliedPosition();
 		int GetTotalMostAppliedPosition();
 		string GetMostAppliedLocation();
 	    IEnumerable<DateAppliedChart> GetDateAppliedView();
+		Task DeleteJob(Job deleteJob);
 		
 
     }
@@ -143,10 +144,18 @@ namespace CareerTrack.Services
             }
             return query.Count();
         }
-		public async void AddJob(Job newJob)
+		public async Task AddJob(Job newJob)
 		{
-			_careerDbContext.Job.Add(newJob);
-			await _careerDbContext.SaveChangesAsync();
+			try
+			{
+                _careerDbContext.Job.Add(newJob);
+                await _careerDbContext.SaveChangesAsync();
+            }
+			catch(Exception ex)
+			{
+				Console.WriteLine($"Error adding new job: {ex.Message}");
+			}
+
 		}
 		public Job? GetJobById(int id)
 		{
@@ -158,16 +167,34 @@ namespace CareerTrack.Services
             }
 			return job;
 		}
-		public async void UpdateJob(Job updateJob)
+		public async Task UpdateJob(Job updateJob)
 		{
-			_careerDbContext.Update(updateJob);
-			await _careerDbContext.SaveChangesAsync();
+			try {
+                _careerDbContext.Update(updateJob);
+                await _careerDbContext.SaveChangesAsync();
+            }catch(Exception ex)
+			{
+				Console.WriteLine($"Error updating job: {ex.Message}");
+			}
+
 		}
 		public IEnumerable<DateAppliedChart> GetDateAppliedView()
 		{
 			return _careerDbContext.DateAppliedChart.ToList();
 		}
-		
+		public async Task DeleteJob(Job deleteJob)
+		{
+			try
+			{
+                _careerDbContext.Job.Remove(deleteJob);
+                await _careerDbContext.SaveChangesAsync();
+            }
+			catch(Exception ex)
+			{
+				Console.WriteLine($"Error deleting job: {ex.Message}");
+			}
+
+		}
     }
 }
 

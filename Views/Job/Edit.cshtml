@@ -88,6 +88,13 @@
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
         }
+        @using (Html.BeginForm("Delete", "Job", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken();
+            <div class="form-action-delete">
+                <input type="submit" value="Delete" class="btn btn-danger"/>
+            </div>
+        }
         @functions{
             private List<SelectListItem> GetDropdowns()
             {

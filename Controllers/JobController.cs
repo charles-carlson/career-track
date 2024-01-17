@@ -67,6 +67,16 @@ namespace CareerTrack.Controllers
             }
             return View(updateJob);
         }
+        [HttpPost]
+        public IActionResult Delete(Job deleteJob)
+        {
+            if (ModelState.IsValid)
+            {
+                _jobService.DeleteJob(deleteJob);
+                return RedirectToAction("Index");
+            }
+            return View(deleteJob);
+        }
     }
 }
 
