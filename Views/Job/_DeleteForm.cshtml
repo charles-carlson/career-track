@@ -1,0 +1,19 @@
+﻿@model Job
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    @using (Html.BeginForm("Delete","Job",FormMethod.Post)){
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-action-delete">
+        <input type="checkbox" name="deleteJob" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
+    }
+
+</body>
+</html>

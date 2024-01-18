@@ -40,4 +40,8 @@
     <Folder Include="Views\Job\" />
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Job\EditForm.cshtml" />
+    <Content Remove="Views\Job\DeleteForm.cshtml" />
+  </ItemGroup>
 </Project>

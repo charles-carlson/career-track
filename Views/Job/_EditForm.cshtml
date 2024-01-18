@@ -1,0 +1,105 @@
+﻿@model Job
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .form-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                width: 150px; /* Fixed width for labels */
+                margin-right: 10px; /* Optional: Add margin between label and input */
+                text-align: right;
+            }
+
+        label + input {
+            width: 30%;
+            margin: 0 30% 0 4%;
+        }
+
+        label + select {
+            width: 30%;
+            margin: 0 30% 0 4%;
+        }
+
+        .form-group input, .form-group select {
+            flex: 1; /* Allow input/select to take up the remaining space */
+        }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("Edit", "Job", FormMethod.Post))
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Position)
+        @Html.TextBoxFor(model => model.Position, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Position)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Languages)
+        @Html.TextBoxFor(model => model.Languages, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Languages)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateApplied)
+        <input asp-for="DateApplied" class="form-control" type="date" />
+        @Html.ValidationMessageFor(model => model.DateApplied)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Location)
+        @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Location)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsWFH)
+        @Html.DropDownListFor(model => model.IsWFH, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IsWFH)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Salary)
+        @Html.TextBoxFor(model => model.Salary, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Salary)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ReplyBack)
+        @Html.TextBoxFor(model => model.ReplyBack, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ReplyBack)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Interview)
+        @Html.DropDownListFor(model => model.Interview, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Interview)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Offer)
+        @Html.DropDownListFor(model => model.Offer, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Offer)
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    }
+    @functions{
+    private List<SelectListItem>
+        GetDropdowns()
+        {
+        return new List<SelectListItem>
+            {
+            new SelectListItem {Value="Yes",Text="Yes"},
+            new SelectListItem {Value="No",Text="No"}
+            };
+       }
+   }
+</body>
+</html>
