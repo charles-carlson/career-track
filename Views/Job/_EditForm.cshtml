@@ -29,6 +29,9 @@
         .form-group input, .form-group select {
             flex: 1; /* Allow input/select to take up the remaining space */
         }
+        #edit-button{
+            display:flex;
+        }
     </style>
 </head>
 <body>
@@ -88,7 +91,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button id="edit-button" type="submit" class="btn btn-primary">Save Changes</button>
     }
     @functions{
     private List<SelectListItem>

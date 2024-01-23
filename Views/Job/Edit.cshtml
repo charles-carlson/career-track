@@ -5,14 +5,16 @@
         <meta charset="utf-8" />
         <title></title>
         <style>
-
+            .delete-form{
+                display:flex;
+                flex-direction:row-reverse;
+            }
         </style>
     </head>
     <body>
         <h2>Edit Job</h2>
-        @{
-            await Html.RenderPartialAsync("_EditForm",Model);
-            await Html.RenderPartialAsync("_DeleteForm",Model);
-        }
+        <div>@{await Html.RenderPartialAsync("_EditForm", Model);}</div>
+
+        <div class="delete-form">@{await Html.RenderPartialAsync("_DeleteForm", Model);}</div> 
     </body>
    </html>

@@ -11,6 +11,9 @@
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
+#layout-nav {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 10px 10px 0 rgba(0, 0, 0, 0.12);
+}
 
 html {
   position: relative;
