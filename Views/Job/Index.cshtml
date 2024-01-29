@@ -125,7 +125,9 @@
             </tbody>
         </table>
         <div>
+            
             <nav aria-label="pagination">
+                @Html.DropDownList("PageSizeDropdown", ViewData["SelectList"] as SelectList, new { @onchange = "changePageSize(this)" })
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
                     {
@@ -142,13 +144,18 @@
 </html>
 @section scripts{
     <script>
+        function changePageSize(selected) {
+            var actionUrl = '@Url.Action("Index", "Job", new { pageSize = "PLACEHOLDER" , filter=Model.Filter})';
+            actionUrl = actionUrl.replace('PLACEHOLDER', selected.value);
+            window.location = actionUrl;
+        }
     function EditOverlay(id) {
         console.log(id);
         $.get("@Url.Action("Edit","Job")/" + id, function (data) {
             $('.edit-overlay-body').html(data);
             document.getElementById("overlay").style.display = "block";
         });
-        
+
     }
     function AddOverlay() {
         console.log('Adding a job');

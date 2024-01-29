@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CareerTrack.Models;
 using CareerTrack.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,6 +33,7 @@ namespace CareerTrack.Controllers
                 PageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalJobs, TotalPages = totalPages }
             };
             ViewData["jobSum"] = currentApplied;
+            ViewData["SelectList"] = new SelectList(new List<int> { 10, 25, 50, 100 },pageSize);
             return View(viewModel);
         }
         public IActionResult Add()
