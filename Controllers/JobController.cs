@@ -34,6 +34,8 @@ namespace CareerTrack.Controllers
             };
             ViewData["jobSum"] = currentApplied;
             ViewData["SelectList"] = new SelectList(new List<int> { 10, 25, 50, 100 },pageSize);
+            ViewData["Selected"] = pageSize;
+            ViewData["Filter"] = filter;
             return View(viewModel);
         }
         public IActionResult Add()

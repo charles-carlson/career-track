@@ -26,7 +26,7 @@
     </div>
     <div>
         <h1>Careers</h1>
-        <p>You have applied to @ViewData["jobSum"] job listings</p>
+        <p>You have applied to @ViewData["jobSum"] job listings with the @ViewData["Filter"] filter</p>
     </div>
     <div>
         <div class="table-header">
@@ -38,8 +38,9 @@
                         <i id="icon" class="bi bi-plus-lg"></i>
                     </a>
                 </div>
-                @using (Html.BeginForm("Index", "Job", FormMethod.Get, new { @class="search-bar-form" }))
-                    {
+                @using (Html.BeginForm("Index", "Job", new { page = Model.PageInfo.PageNumber, pageSize = ViewData["Selected"] }, FormMethod.Get, null,new { @class = "search-bar-form" }))
+                {
+                    
                     <input type="text" id="searchInput" placeholder="Search..." name="filter" value="@Model.Filter" />
                     <input type="submit" value="Search" />
                 }
@@ -125,12 +126,15 @@
         <div>
             
             <nav aria-label="pagination">
-                @Html.DropDownList("PageSizeDropdown", ViewData["SelectList"] as SelectList, new {@class = "pageSize-dropdown", @onchange = "changePageSize(this)" })
+                @using (Html.BeginForm("Index","Job",new {filter=Model.Filter },FormMethod.Get))
+                    {
+                    @Html.DropDownList("pageSize", ViewData["SelectList"] as SelectList, new { @class = "pageSize-dropdown", @onchange = "this.form.submit()" })
+                }
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
                     {
                         <li class="@(i == Model.PageInfo.PageNumber ? "active" : "")">
-                            <a href="@Url.Action("Index",new { page = i, pageSize = Model.PageInfo.PageSize,filter = Model.Filter })">@i</a>
+                            <a href="@Url.Action("Index",new { page = i, pageSize = ViewData["Selected"],filter = ViewData["Filter"] })">@i</a>
                         </li>
                     }
                 </ul>
@@ -142,11 +146,13 @@
 </html>
 @section scripts{
     <script>
-        function changePageSize(selected) {
-            var actionUrl = '@Url.Action("Index", "Job", new { pageSize = "PLACEHOLDER" , filter=Model.Filter})';
-            actionUrl = actionUrl.replace('PLACEHOLDER', selected.value);
-            window.location = actionUrl;
-        }
+        //function changePageSize(selected) {
+         //   var filterVal = '@Model.Filter'
+        //    var actionUrl = '@Url.Action("Index", "Job", new { pageSize = "PLACEHOLDER" , filter = "FILTERPLACEHOLDER" })';
+         //   actionUrl = actionUrl.replace('PLACEHOLDER', selected.value).replace("FILTERPLACEHOLDER",filterVal);
+
+        //    window.location = actionUrl;
+        //}   
     function EditOverlay(id) {
         console.log(id);
         $.get("@Url.Action("Edit","Job")/" + id, function (data) {
