@@ -23,6 +23,32 @@ html {
 body {
   margin-bottom: 60px;
 }
+.search-header{
+    overflow:hidden;
+    width:100%;
+}
+.icon-header{
+    float: left;
+    height: inherit;
+    width:30px;
+    margin-right:3px;
+}
+
+.th-header {
+    background: lightseagreen;
+    overflow: hidden;
+    box-shadow: 1px 1px 1px darkgrey;
+    height:75px;
+}
+.th-row{
+    color:white;
+}
+.pageSize-dropdown{
+    border: 1px solid #ddd;
+    background-color: white;
+    margin: 0 1px;
+    color: darkgray;
+}
 .pagination {
     list-style: none;
     margin: 0;
@@ -41,7 +67,7 @@ body {
     text-align:center;
 }
 .pagination a:hover{
-    background-color: lightgray;
+    background-color: lightseagreen;
     color:white;
 }
 nav{
@@ -63,10 +89,11 @@ tr {
     border-bottom: 1px solid #ddd;
 }
 table thead th {
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;
     border-spacing: inherit;
     border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd;*/
+    border-spacing:inherit;
 }
 table td {
     border-left: 1px solid #ddd;
@@ -108,10 +135,19 @@ tbody tr:hover{
 .edit-overlay-header {
     text-align: right;
 }
+#icon-button{
+    width:inherit;
+}
 #icon {
-    border: 1px solid #ddd;
-    font-size: 2em;
-    display:inline-block;
+    font-size: 20px;
+    background-color:lightseagreen;
+    color:white;
+    float:left;
+    width:inherit;
+}
+.search-bar-form{
+float:left;
+height:30px;
 }
 .card {
     display: block;
