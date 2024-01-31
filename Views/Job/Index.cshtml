@@ -124,12 +124,13 @@
             </tbody>
         </table>
         <div>
-            
+            @using (Html.BeginForm("Index", "Job", FormMethod.Get))
+            {
+                @Html.DropDownList("pageSize", new SelectList(new List<int> { 10, 25, 50, 100 }, ViewData["Selected"]), new { @class = "pageSize-dropdown", @onchange = "this.form.submit()" })
+                @Html.Hidden("filter", ViewData["Filter"])
+            }
             <nav aria-label="pagination">
-                @using (Html.BeginForm("Index","Job",new {filter=Model.Filter },FormMethod.Get))
-                    {
-                    @Html.DropDownList("pageSize", ViewData["SelectList"] as SelectList, new { @class = "pageSize-dropdown", @onchange = "this.form.submit()" })
-                }
+
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
                     {

@@ -20,7 +20,7 @@ namespace CareerTrack.Controllers
         }
         public IActionResult Index(int page = 1, int pageSize = 25, string filter="")
         {
-
+            ModelState.Remove("filter");
             var currentApplied = _jobService.GetNumberofJobs();
             var jobData = _jobService.GetPagedJobs(page, pageSize, filter);
             int totalJobs = _jobService.GetNumberofPagedJobs(filter);
