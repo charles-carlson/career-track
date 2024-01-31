@@ -18,11 +18,16 @@ namespace CareerTrack.Controllers
         {
             _jobService = jobService;
         }
-        public IActionResult Index(int page = 1, int pageSize = 25, string filter="")
+        public IActionResult Index(int page = 1, int pageSize = 25, string filter="", string sort="")
         {
             ModelState.Remove("filter");
+            var sortType = sort;
+            if(sort != "")
+            {
+                sortType = sort.Split(',')[1];   
+            }
             var currentApplied = _jobService.GetNumberofJobs();
-            var jobData = _jobService.GetPagedJobs(page, pageSize, filter);
+            var jobData = _jobService.GetPagedJobs(page, pageSize, filter,sort);
             int totalJobs = _jobService.GetNumberofPagedJobs(filter);
             int totalPages = (int)Math.Ceiling((double)totalJobs / pageSize);
             var viewModel = new PagedViewModel
@@ -32,6 +37,7 @@ namespace CareerTrack.Controllers
                 Filter=filter,
                 PageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = totalJobs, TotalPages = totalPages }
             };
+            ViewData["Sort"] = sortType;
             ViewData["jobSum"] = currentApplied;
             ViewData["SelectList"] = new SelectList(new List<int> { 10, 25, 50, 100 },pageSize);
             ViewData["Selected"] = pageSize;

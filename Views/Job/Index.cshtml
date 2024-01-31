@@ -26,7 +26,7 @@
     </div>
     <div>
         <h1>Careers</h1>
-        <p>You have applied to @ViewData["jobSum"] job listings with the @ViewData["Filter"] filter</p>
+        <p>You have applied to @ViewData["jobSum"] job listings</p>
     </div>
     <div>
         <div class="table-header">
@@ -52,33 +52,43 @@
                 <tr class="th-header">
                     <th class="th-row">
                         Name
+                       <a id="Name"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a> 
                     </th>
                     <th class="th-row">
                         Position
+                        <a id="Position"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Languages
+                        <a id="Languages"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Date Applied
+                        <a id="DateApplied"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Location
+                        <a id="Location"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         IsWFH
+                        <a id="IsWFH"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Salary
+                        <a id="Salary"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Reply Back
+                        <a id="ReplyBack"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Interview
+                        <a id="Interview"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
                     </th>
                     <th class="th-row">
                         Offer
+                        <a id="Offer"class="sort-icon"><i style="float:right;font-size:1em;" class="bi bi-filter"></i></a>
                     </th>
                 </tr>
             </thead>
@@ -153,7 +163,25 @@
          //   actionUrl = actionUrl.replace('PLACEHOLDER', selected.value).replace("FILTERPLACEHOLDER",filterVal);
 
         //    window.location = actionUrl;
-        //}   
+        //}
+        function ToggleSort(id) {
+            console.log(id);
+            var url = '@Url.Action("Index","Job",new {pageSize = "PLACEHOLDER",sort="SORTPLACEHOLDER" })'
+            var replace = id
+            if ('@ViewData["Sort"]' == "desc") {
+                replace = replace + ",asc"
+            }
+            else if ('@ViewData["Sort"]' == "asc") {
+                replace = replace +",desc"
+            }
+            else {
+                replace = replace +",desc"
+            }
+            var actionUrl = url.replace("PLACEHOLDER", '@ViewData["Selected"]').replace("SORTPLACEHOLDER", replace)
+            console.log(actionUrl);
+            window.location.href = actionUrl;
+            //window.location.reload();
+        }
     function EditOverlay(id) {
         console.log(id);
         $.get("@Url.Action("Edit","Job")/" + id, function (data) {
@@ -191,6 +219,14 @@
             });
         }
     });
+        document.addEventListener('DOMContentLoaded', () => {
+            var sortIcons = document.getElementsByClassName('sort-icon');
+            for (let i = 0; i < sortIcons.length; i++) {
+                sortIcons[i].addEventListener('click', () => {
+                    ToggleSort(sortIcons[i].id);
+                });
+            }
+        });
     </script>
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

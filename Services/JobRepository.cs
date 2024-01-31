@@ -10,7 +10,7 @@ namespace CareerTrack.Services
 	{
 		IEnumerable<Job> GetJobs();
 		int GetNumberofJobs();
-		IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter);
+		IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter, string sort);
 		int GetNumberofPagedJobs(string filter);
 		Task AddJob(Job newJob);
 		Job GetJobById(int id);
@@ -68,9 +68,18 @@ namespace CareerTrack.Services
 
 			return position[0];
 		}
-		public IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter)
+		public IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter,string sort)
 		{
+            string col = "";
+            string sortType = "";
+            if(sort != "")
+            {
+                var resultArray = sort.Split(',');
+                col = resultArray[0];
+                sortType = resultArray[1];
+            }
 			Console.WriteLine(filter);
+			Console.WriteLine(sort);
 			var query = _careerDbContext.Job.AsQueryable();
 			if (!string.IsNullOrEmpty(filter))
 			{
@@ -104,7 +113,122 @@ namespace CareerTrack.Services
 
             }
 			int skip = (page - 1) * pageSize;
-			var pagedData = query.OrderBy(x=>x.Id).Skip(skip).Take(pageSize).ToList();
+			var pagedData = query.OrderByDescending(x => x.Id).Skip(skip).Take(pageSize).ToList();
+            switch (col)
+			{
+				case "Name":
+					if(sortType == "desc")
+					{
+                        pagedData = query.OrderByDescending(x => x.Name).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+					{
+                        pagedData = query.OrderBy(x => x.Name).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Position":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Position).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Position).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Languages":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Languages).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Languages).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Location":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Location).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Location).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "IsWFH":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.IsWFH).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.IsWFH).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Salary":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Salary).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Salary).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "ReplyBack":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.ReplyBack).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.ReplyBack).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Interview":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Interview).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Interview).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				case "Offer":
+                    if (sortType == "desc")
+                    {
+                        pagedData = query.OrderByDescending(x => x.Offer).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    else
+                    {
+                        pagedData = query.OrderBy(x => x.Offer).Skip(skip).Take(pageSize).ToList();
+
+                    }
+                    break;
+				default:
+					return pagedData;
+                    
+			}
+			
 			return pagedData;
 		}
 		public int GetNumberofPagedJobs(string filter)
