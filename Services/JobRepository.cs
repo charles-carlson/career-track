@@ -10,7 +10,7 @@ namespace CareerTrack.Services
 	{
 		IEnumerable<Job> GetJobs();
 		int GetNumberofJobs();
-		IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter, string sort);
+		IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter, string sort,string col);
 		int GetNumberofPagedJobs(string filter);
 		Task AddJob(Job newJob);
 		Job GetJobById(int id);
@@ -68,16 +68,8 @@ namespace CareerTrack.Services
 
 			return position[0];
 		}
-		public IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter,string sort)
-		{
-            string col = "";
-            string sortType = "";
-            if(sort != "")
-            {
-                var resultArray = sort.Split(',');
-                col = resultArray[0];
-                sortType = resultArray[1];
-            }
+		public IEnumerable<Job> GetPagedJobs(int page, int pageSize, string filter,string sort,string col)
+		{           
 			Console.WriteLine(filter);
 			Console.WriteLine(sort);
 			var query = _careerDbContext.Job.AsQueryable();
@@ -117,7 +109,7 @@ namespace CareerTrack.Services
             switch (col)
 			{
 				case "Name":
-					if(sortType == "desc")
+					if(sort == "desc")
 					{
                         pagedData = query.OrderByDescending(x => x.Name).Skip(skip).Take(pageSize).ToList();
 
@@ -129,7 +121,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Position":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Position).Skip(skip).Take(pageSize).ToList();
 
@@ -141,7 +133,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Languages":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Languages).Skip(skip).Take(pageSize).ToList();
 
@@ -153,7 +145,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Location":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Location).Skip(skip).Take(pageSize).ToList();
 
@@ -165,7 +157,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "IsWFH":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.IsWFH).Skip(skip).Take(pageSize).ToList();
 
@@ -177,7 +169,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Salary":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Salary).Skip(skip).Take(pageSize).ToList();
 
@@ -189,7 +181,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "ReplyBack":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.ReplyBack).Skip(skip).Take(pageSize).ToList();
 
@@ -201,7 +193,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Interview":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Interview).Skip(skip).Take(pageSize).ToList();
 
@@ -213,7 +205,7 @@ namespace CareerTrack.Services
                     }
                     break;
 				case "Offer":
-                    if (sortType == "desc")
+                    if (sort == "desc")
                     {
                         pagedData = query.OrderByDescending(x => x.Offer).Skip(skip).Take(pageSize).ToList();
 

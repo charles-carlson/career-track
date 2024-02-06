@@ -7,6 +7,8 @@ namespace CareerTrack.Models
         public IEnumerable<Job> Data { get; set; }
         public PageInfo PageInfo { get; set; }
         public string Filter { get; set; }
+        public List<string> Columns { get; set; }
+        public string Sort { get; set; }
        /* public string GetShortDate
         {
             get

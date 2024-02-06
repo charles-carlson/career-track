@@ -101,6 +101,8 @@ table td {
 }
 td{
     padding:.5em;
+    max-width: 200px;
+    word-wrap:break-word;
 }
 tbody tr:hover{
     background-color: lightseagreen;
@@ -239,10 +241,21 @@ height:30px;
     width:inherit;
     text-align:center;
 }
-#searchInput{
-    width:500px;
-    border-color:lightseagreen;
+#searchInput {
+    width: 500px;
+    box-shadow: 1px 1px 1px lightseagreen;
 }
 .sort-icon{
     color:white;
+}
+#search-button {
+    background-color: lightseagreen;
+    color: white;
+    border: none;
+    width: 100px;
+    height: 30px;
+    box-shadow: 2px 1px 1px darkgrey;
+}
+.page-size-dropdown{
+    float:left;
 }

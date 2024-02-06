@@ -38,58 +38,35 @@
                         <i id="icon" class="bi bi-plus-lg"></i>
                     </a>
                 </div>
-                @using (Html.BeginForm("Index", "Job", new { page = Model.PageInfo.PageNumber, pageSize = ViewData["Selected"] }, FormMethod.Get, null,new { @class = "search-bar-form" }))
-                {
-                    
+                @using (Html.BeginForm("Index", "Job", new { page = Model.PageInfo.PageNumber, pageSize = ViewData["Selected"] }, FormMethod.Get, null, new { @class = "search-bar-form" }))
+                    {
+
                     <input type="text" id="searchInput" placeholder="Search..." name="filter" value="@Model.Filter" />
-                    <input type="submit" value="Search" />
-                }
+                    <input id="search-button" type="submit" value="Search" />
+                    }
 
             </div>
         </div>
-        <table style="width:max-content">
+        <table style="width:100%;table-layout:fixed">
             <thead>
                 <tr class="th-header">
-                    <th class="th-row">
-                        Name
-                       <a id="Name"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a> 
-                    </th>
-                    <th class="th-row">
-                        Position
-                        <a id="Position"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Languages
-                        <a id="Languages"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Date Applied
-                        <a id="DateApplied"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Location
-                        <a id="Location"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        IsWFH
-                        <a id="IsWFH"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Salary
-                        <a id="Salary"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Reply Back
-                        <a id="ReplyBack"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Interview
-                        <a id="Interview"class="sort-icon"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
-                    </th>
-                    <th class="th-row">
-                        Offer
-                        <a id="Offer"class="sort-icon"><i style="float:right;font-size:1em;" class="bi bi-filter"></i></a>
-                    </th>
+                    
+                    @for (int i = 0; i < Model.Columns.Count; i++)
+                    {
+
+                        var colName = Model.Columns[i];
+                        <th class="th-row">
+
+                            <form id="form-@i" method="get" action="@Url.Action("Index","Job")">
+                                @Html.Hidden("filter", ViewData["Filter"])
+                                @Html.Hidden("pageSize", ViewData["Selected"])
+                                @Html.Hidden("sort", Model.Sort)
+                                <input type="hidden" name="col" value="@colName" />
+                                @colName
+                                <a class="sort-icon" onclick="submitForm('@i','@colName'); return false;"><i style="float: right; font-size: 1em;" class="bi bi-filter"></i></a>
+                            </form>
+                        </th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -134,18 +111,20 @@
             </tbody>
         </table>
         <div>
-            @using (Html.BeginForm("Index", "Job", FormMethod.Get))
-            {
-                @Html.DropDownList("pageSize", new SelectList(new List<int> { 10, 25, 50, 100 }, ViewData["Selected"]), new { @class = "pageSize-dropdown", @onchange = "this.form.submit()" })
-                @Html.Hidden("filter", ViewData["Filter"])
-            }
-            <nav aria-label="pagination">
 
+            <nav aria-label="pagination">
+                @using (Html.BeginForm("Index", "Job", FormMethod.Get, new {@class="page-size-dropdown"}))
+                {
+                    @Html.DropDownList("pageSize", new SelectList(new List<int> { 10, 25, 50, 100 }, ViewData["Selected"]), new { @class = "pageSize-dropdown", @onchange = "this.form.submit()" })
+                    @Html.Hidden("filter", ViewData["Filter"])
+                    @Html.Hidden("sort", Model.Sort)
+                    @Html.Hidden("col", ViewData["Col"])
+                }
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.PageInfo.TotalPages; i++)
                     {
                         <li class="@(i == Model.PageInfo.PageNumber ? "active" : "")">
-                            <a href="@Url.Action("Index",new { page = i, pageSize = ViewData["Selected"],filter = ViewData["Filter"] })">@i</a>
+                            <a href="@Url.Action("Index",new { page = i, pageSize = ViewData["Selected"],filter = ViewData["Filter"], sort = Model.Sort, col = ViewData["col"] })">@i</a>
                         </li>
                     }
                 </ul>
@@ -157,30 +136,16 @@
 </html>
 @section scripts{
     <script>
-        //function changePageSize(selected) {
-         //   var filterVal = '@Model.Filter'
-        //    var actionUrl = '@Url.Action("Index", "Job", new { pageSize = "PLACEHOLDER" , filter = "FILTERPLACEHOLDER" })';
-         //   actionUrl = actionUrl.replace('PLACEHOLDER', selected.value).replace("FILTERPLACEHOLDER",filterVal);
+        function submitForm(formId, colName) {
+            var form = document.getElementById('form-' + formId);
+            var sortInput = form.querySelector('[name="sort"]');
+            sortInput.value = sortInput.value === 'asc' ? 'desc' : 'asc';
 
-        //    window.location = actionUrl;
-        //}
-        function ToggleSort(id) {
-            console.log(id);
-            var url = '@Url.Action("Index","Job",new {pageSize = "PLACEHOLDER",sort="SORTPLACEHOLDER" })'
-            var replace = id
-            if ('@ViewData["Sort"]' == "desc") {
-                replace = replace + ",asc"
-            }
-            else if ('@ViewData["Sort"]' == "asc") {
-                replace = replace +",desc"
-            }
-            else {
-                replace = replace +",desc"
-            }
-            var actionUrl = url.replace("PLACEHOLDER", '@ViewData["Selected"]').replace("SORTPLACEHOLDER", replace)
-            console.log(actionUrl);
-            window.location.href = actionUrl;
-            //window.location.reload();
+            var formData = new FormData(form);
+            var url = form.getAttribute('action') + '?' + new URLSearchParams(formData).toString();
+
+            history.pushState({}, '', url);
+            form.submit();
         }
     function EditOverlay(id) {
         console.log(id);
@@ -219,14 +184,6 @@
             });
         }
     });
-        document.addEventListener('DOMContentLoaded', () => {
-            var sortIcons = document.getElementsByClassName('sort-icon');
-            for (let i = 0; i < sortIcons.length; i++) {
-                sortIcons[i].addEventListener('click', () => {
-                    ToggleSort(sortIcons[i].id);
-                });
-            }
-        });
     </script>
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

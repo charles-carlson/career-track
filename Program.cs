@@ -13,7 +13,7 @@ builder.Services.AddDbContext<CareerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("localdb")));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<CareerDbContext>();
-
+builder.Services.AddHttpLogging(o => { });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +23,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
