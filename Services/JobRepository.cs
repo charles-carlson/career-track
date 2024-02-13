@@ -266,6 +266,7 @@ namespace CareerTrack.Services
 			{
                 _careerDbContext.Job.Add(newJob);
                 await _careerDbContext.SaveChangesAsync();
+                
             }
 			catch(Exception ex)
 			{
