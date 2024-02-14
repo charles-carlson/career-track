@@ -23,10 +23,18 @@ namespace CareerTrack.Controllers
         {
             return View();
         }
+        [HttpPost]
         public IActionResult Add(Job newJob)
         {
-            _jobService.AddJob(newJob);
-            return Ok(newJob); // This will return the newJob object as JSON
+            if (ModelState.IsValid)
+            {
+                _jobService.AddJob(newJob);
+                return Ok(newJob); // This will return the newJob object as JSON
+            }
+            else
+            {
+                return NotFound(newJob);
+            }
         }
     }
 }
