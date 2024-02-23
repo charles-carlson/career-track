@@ -4,6 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <style>
+        #delete-button {
+            background: lightseagreen;
+            outline:none;
+        }
+
+    </style>
 </head>
 <body>
     @using (Html.BeginForm("Delete","Job",FormMethod.Post)){
@@ -11,7 +18,7 @@
     @Html.HiddenFor(model => model.Id)
     <div class="form-action-delete">
         <input type="checkbox" name="deleteJob" />
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button id="delete-button"type="submit" class="btn btn-danger">Delete</button>
     </div>
     }
 

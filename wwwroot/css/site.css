@@ -259,3 +259,8 @@ height:30px;
 .page-size-dropdown{
     float:left;
 }
+.close {
+    color: white;
+    background: lightseagreen;
+    border: 1px solid lightseagreen;
+}
