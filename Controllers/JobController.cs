@@ -37,7 +37,7 @@ namespace CareerTrack.Controllers
             var sortDirection = sort == "desc" ? "asc" : "desc";
             var viewModel = new PagedViewModel
             {
-                Columns = new List<string> {"Name","Position","Languages","DateApplied","Location","IsWFH","Salary","ReplyBack","Interview","Offer"},
+                Columns = new List<string> {"Name","Position","Languages","DateApplied","Location","IsWFH","Salary","ReplyBack","Interview","Offer","Source"},
                 Data = jobData,
                 Filter=filter,
                 Sort = sortDirection,

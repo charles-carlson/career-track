@@ -97,6 +97,11 @@
         @Html.DropDownListFor(model => model.Offer, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Offer)
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Source)
+        @Html.TextBoxFor(model => model.Source, new { @class = "form-control"})
+        @Html.ValidationMessageFor(model => model.Source)
+    </div>
 
 
     <button id="edit-button" type="submit" class="btn btn-primary">Save Changes</button>

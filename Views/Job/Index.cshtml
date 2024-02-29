@@ -84,7 +84,7 @@
                         </td>
                         <td>
                             @{
-                                var newDate = j.DateApplied.ToString("dd/MM/yyyy");
+                                var newDate = j.DateApplied.ToString("MM/dd/yyyy");
                             }
                             @newDate
                         </td>
@@ -105,6 +105,29 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => j.Offer)
+                        </td>
+                        <td>
+                            @{  @using System.Text.RegularExpressions;
+                                Console.WriteLine(j.Source);
+                                string output = "";
+                                if (j.Source != null)
+                                {
+
+                                    var url = j.Source.ToString();
+                                    Console.WriteLine(url.Contains(".com").ToString(), "url contains this ending");
+                                    string reg_pattern = url.Contains(".com", StringComparison.OrdinalIgnoreCase) ? @"https://.*?\.com" : @"https://.*?\.net";
+                                    Console.WriteLine(reg_pattern);
+                                    Match match = Regex.Match(url, reg_pattern, RegexOptions.IgnoreCase);
+                                    output = match.Value;
+                                    Console.WriteLine(output,"this is out");
+
+                                }
+                                else
+                                {
+                                    output = "Data not found for this entry";
+                                }
+                                }
+                            <a id="SourceCol" href="@j.Source" target="_blank">@output</a>
                         </td>
                     </tr>
                 }

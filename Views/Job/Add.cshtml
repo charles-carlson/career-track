@@ -86,6 +86,11 @@
             @Html.DropDownListFor(model => model.Offer, GetDropdowns(), "Select Yes or No", new { @class = "form-control" })
             <span asp-validation-for="Offer" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <label asp-for="Source">Source:</label>
+            <input asp-for="Source" class="form-control" type="text" />
+            <span asp-validation-for="Source" class="form-control" type="text"/>
+        </div>
         <div>
             <button type="submit" class="btn btn-primary">Add Job</button>
         </div>

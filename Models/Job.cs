@@ -23,6 +23,6 @@ namespace CareerTrack.Models
 		public string? ReplyBack { get; set; }
 		public string? Interview { get; set; }
 		public string? Offer { get; set; }
+		public string? Source { get; set; }
 	}
 }
-
