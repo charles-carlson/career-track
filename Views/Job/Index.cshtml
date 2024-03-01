@@ -115,7 +115,32 @@
 
                                     var url = j.Source.ToString();
                                     Console.WriteLine(url.Contains(".com").ToString(), "url contains this ending");
-                                    string reg_pattern = url.Contains(".com", StringComparison.OrdinalIgnoreCase) ? @"https://.*?\.com" : @"https://.*?\.net";
+                                    string[] types = new string[] { ".com", ".net", ".org", ".io", ".gov" };
+                                    string reg_pattern = "";
+                                    string correctType = types.FirstOrDefault<string>(s => url.Contains(s));
+                                    switch (correctType)
+                                    {
+                                        case ".com":
+                                            reg_pattern = @"https://.*?\.com";
+                                            Console.WriteLine("source is .com site");
+                                            break;
+                                        case ".net":
+                                            reg_pattern = @"https://.*?\.net";
+                                            Console.WriteLine("source is .net site");
+                                            break;
+                                        case ".org":
+                                            reg_pattern = @"https://.*?\.org";
+                                            Console.WriteLine("source is .org site");
+                                            break;
+                                        case ".io":
+                                            reg_pattern = @"https://.*?\.io";
+                                            Console.WriteLine("source is .io site");
+                                            break;
+                                        case ".gov":
+                                            reg_pattern = @"https://.*?\.gov";
+                                            Console.WriteLine("source is .gov site");
+                                            break;
+                                    }
                                     Console.WriteLine(reg_pattern);
                                     Match match = Regex.Match(url, reg_pattern, RegexOptions.IgnoreCase);
                                     output = match.Value;
