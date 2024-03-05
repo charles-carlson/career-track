@@ -10,6 +10,42 @@
     <title>Charts</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
     <script>
+        var domainValues = @Html.Raw(JsonSerializer.Serialize(ViewBag.Domains));
+        var domainCountValue = @Html.Raw(JsonSerializer.Serialize(ViewBag.DomainCount));
+        var doughnutChartData = {
+            labels: domainValues,
+            datasets: [{
+                label: "Most popular Job Boards",
+                borderWidth: 2,
+                backgroundColor: [
+                    'rgb(32,178,170)',
+                    'rgb(28,156,149)',
+                    'rgb(24,135,129)',
+                    'rgb(22,124,118)'
+                ],
+                hoverOffset: 4,
+                data: domainCountValue
+            }]
+        }
+        var doughnutChartOptions = {
+            plugins: {
+                datalabels: {
+                    formatter: (value, context) => {
+                        return context.chart.data.labels[context.dataIndex];
+                    }
+                }
+            },
+            laout: {
+                padding:20
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 2000
+            }
+        }
+        console.log("Below are the domain values");
+        console.log(domainValues, domainCountValue);
         var dateStrings = @Html.Raw(JsonSerializer.Serialize(ViewBag.Dates));
         var dateCount = @Html.Raw(JsonSerializer.Serialize(ViewBag.DateCount));
         var dates = dateStrings.map((dateString) => {
@@ -72,6 +108,24 @@
                 }
             });
         }
+        function handleDoughnutIntersection(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startDoughnutAnimation();
+                    }
+                })
+        }
+        function startDoughnutAnimation() {
+            if (window.myDoughtnut) {
+                window.myDoughtnut.destroy();
+            }
+            var ctx = document.getElementById("piecanvas").getContext("2d");
+            window.myDoughnut = new Chart(ctx, {
+                type: 'doughnut',
+                data: doughnutChartData,
+                options: doughnutChartOptions
+            })
+        }
         function startChartAnimation() {
             if (window.myBar) {
                 window.myBar.destroy();
@@ -91,6 +145,16 @@
                 observer.observe(chartCanvas);
             } else {
                 console.error("Unable to find the chart canvas element with ID 'barcanvas'");
+            }
+        })
+        document.addEventListener("DOMContentLoaded", () => {
+            var observer = new IntersectionObserver(handleDoughnutIntersection, { threshold:0.5 })
+            var doughnutCanvas = document.getElementById("piecanvas");
+            if (doughnutCanvas) {
+                observer.observe(doughnutCanvas);
+            }
+            else {
+                console.error("Unable to find doughnut canvas element with ID 'piecanvas'");
             }
         })
 
@@ -140,8 +204,20 @@
                     </div>
                 </div>
             </div>
+            <div class="text-decoration" style="text-align:center">
+                <h1 style="color:lightseagreen;font-size:32px;">Your data at a glance...</h1>
+                <hr class="horizontalBreak" />
+            </div>
             <div style="text-align: center">
                 <canvas id="barcanvas"></canvas>
+            </div>
+            <div class="text-decoration" style="text-align:center;">
+                <h1 style="color:lightseagreen;font-size:32px;">Most Popular Job Boards</h1>
+                <p style="color:lightseagreen;font-size:12px;">Disclaimer: not all entries from previous version have their source logged</p>
+                <hr class="horizontalBreak" />
+            </div>
+            <div style="text-align: center">
+                <canvas id="piecanvas"></canvas>
             </div>
         </div>
     </div>

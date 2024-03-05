@@ -24,6 +24,9 @@ public class HomeController : Controller
         ViewData["totalmostApplied"] = _jobService.GetTotalMostAppliedPosition();
         ViewData["mostappliedLocation"] = _jobService.GetMostAppliedLocation();
         var dateAppliedChart = _jobService.GetDateAppliedView();
+        var domainChart = _jobService.GetDomainChartView();
+        List<string> domains = new List<string>();
+        List<int> domainCount = new List<int>();
         List<DateTime> dates = new List<DateTime>(); ;
         List<int> dateCount = new List<int>();
         for(int i = 0; i < dateAppliedChart.Count(); i++)
@@ -31,7 +34,28 @@ public class HomeController : Controller
             dates.Add(dateAppliedChart.ElementAt(i).DateApplied);
             dateCount.Add(dateAppliedChart.ElementAt(i).DateAppliedCount);
         }
-        
+        int other = 0;
+        for(int i = 0; i < domainChart.Count(); i++)
+        {
+            if(domainChart.ElementAt(i).Domain != null)
+            {
+                if(domainChart.ElementAt(i).Domain_count == 1)
+                {
+                    other += 1;
+                }
+                else
+                {
+                    domains.Add(domainChart.ElementAt(i).Domain);
+                    domainCount.Add(domainChart.ElementAt(i).Domain_count);
+                }
+
+            }
+            
+        }
+        domains.Add("Other");
+        domainCount.Add(other);
+        ViewBag.Domains = domains;
+        ViewBag.DomainCount = domainCount;
         ViewBag.Dates = dates;
         ViewBag.DateCount = dateCount;
         return View();

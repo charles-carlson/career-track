@@ -39,9 +39,17 @@
     <Folder Include="Services\" />
     <Folder Include="Views\Job\" />
     <Folder Include="Areas\Identity\Data\" />
+    <Folder Include="wwwroot\Scripts\" />
+    <Folder Include="wwwroot\dist\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Job\EditForm.cshtml" />
     <Content Remove="Views\Job\DeleteForm.cshtml" />
+    <Content Remove="wwwroot\Scripts\Home\Home.js" />
+    <Content Remove="wwwroot\Scripts\" />
+    <Content Remove="wwwroot\dist\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\Scripts\Home\Home.js" />
   </ItemGroup>
 </Project>

@@ -21,7 +21,9 @@ namespace CareerTrack.Services
 		string GetMostAppliedLocation();
 	    IEnumerable<DateAppliedChart> GetDateAppliedView();
 		Task DeleteJob(Job deleteJob);
-		
+        IEnumerable<DomainChart> GetDomainChartView();
+
+
 
     }
 	public class JobRepository : IJobRepository
@@ -299,6 +301,10 @@ namespace CareerTrack.Services
 		{
 			return _careerDbContext.DateAppliedChart.ToList();
 		}
+        public IEnumerable<DomainChart> GetDomainChartView()
+        {
+            return _careerDbContext.DomainChart.ToList();
+        }
 		public async Task DeleteJob(Job deleteJob)
 		{
 			try

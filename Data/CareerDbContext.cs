@@ -13,6 +13,8 @@ namespace CareerTrack.Data
 		}
 		public DbSet<Job> Job { get; set; }
 		public DbSet<DateAppliedChart> DateAppliedChart { get; set; }
+		public DbSet<DomainChart> DomainChart { get; set; }
+		public DbSet<RolesBySource> RolesBySource { get; set; }
 	}
 }
 
